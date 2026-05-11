@@ -94,7 +94,7 @@ export default function PetSelectPage({ onSelectPet }) {
 
       {pets.length > 0 && !showForm && !showInvite && (
         <>
-          <p className="page-desc">选择一只毛孩</p>
+          <p className="page-desc">选择你家毛孩子</p>
           <div className="pet-list">
             {pets.map(pet => (
               <div key={pet.id} className="pet-card-row">
@@ -102,7 +102,6 @@ export default function PetSelectPage({ onSelectPet }) {
                   <span className="pet-card-icon">{pet.photo ? <img src={pet.photo} alt="" /> : '🐕'}</span>
                   <div>
                     <strong>{pet.name}</strong>
-                    <span className="pet-card-role">{pet.role === 'owner' ? '主人' : pet.role === 'guardian' ? '共享成员' : pet.role}</span>
                     <span className="pet-card-breed">{breedsData[pet.breed_id]?.name || ''}</span>
                   </div>
                 </button>
@@ -185,14 +184,14 @@ export default function PetSelectPage({ onSelectPet }) {
 
       {(pets.length === 0 && !showForm && !showInvite) && (
         <div className="no-pet-actions" style={{ display: 'flex', gap: 8, justifyContent: 'center', marginTop: 16 }}>
-          <button className="primary-btn" onClick={() => setShowForm(true)}><PlusIcon size={14} color="#fff" /> 登记毛孩</button>
+          <button className="primary-btn" onClick={() => setShowForm(true)}><PlusIcon size={14} color="#fff" /> 登记毛孩子</button>
           <button className="secondary-btn" onClick={() => setShowInvite(true)}>🔗 接受邀请</button>
         </div>
       )}
 
       {showForm && (
         <>
-          <p className="page-desc">登记毛孩信息</p>
+          <p className="page-desc">登记毛孩子信息</p>
           <form onSubmit={handleCreate} className="profile-form">
             <PhotoUpload imagePreview={imagePreview} onImageChange={handleImageChange} onImageStatusChange={() => {}} />
             <AvatarSelector selectedAvatar={imagePreview} onSelect={handleImageChange} />

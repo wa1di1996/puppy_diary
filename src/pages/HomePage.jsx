@@ -62,6 +62,7 @@ export function HomePage({ profile, onNavigate, stats, records, selectedPet }) {
           </div>
         ) : (
           <div className="dog-profile">
+            <p className="welcome-msg">欢迎{profile.name}{selectedPet?.role === 'owner' ? '主人' : selectedPet?.role === 'guardian' ? '共享成员' : selectedPet?.role || '家人'}</p>
             <div className="dog-avatar" onClick={() => onNavigate(PAGES.PROFILE)}>
               {profile.photo ? (
                 <img src={profile.photo} alt={profile.name} />

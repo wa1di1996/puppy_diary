@@ -4,7 +4,6 @@ import { useDogProfile } from './hooks/useDogProfile'
 import { useDailyRecords } from './hooks/useDailyRecords'
 import { useDogFood } from './hooks/useDogFood'
 import { Header, TitleBar } from './components'
-import { ShareModal } from './components/ShareModal'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { PAGES } from './constants'
 import './App.css'
@@ -28,8 +27,6 @@ function App() {
   const { token, loading: authLoading, isLoggedIn, logout } = useAuth()
   const [selectedPet, setSelectedPet] = useState(null)
   const [currentPage, setCurrentPage] = useState(PAGES.HOME)
-  const [showShare, setShowShare] = useState(false)
-
   useEffect(() => {
     if (isLoggedIn) {
       const saved = localStorage.getItem('puppy_selected_pet')
@@ -96,18 +93,13 @@ function App() {
     <ErrorBoundary>
       <div className="app">
         <TitleBar />
-        <Header currentPage={currentPage} onNavigate={handleNavigate} onLogout={handleLogout} selectedPet={selectedPet} onSelectPet={handleSelectPet} onOpenShare={() => setShowShare(true)} />
+        <Header currentPage={currentPage} onNavigate={handleNavigate} onLogout={handleLogout} selectedPet={selectedPet} onSelectPet={handleSelectPet} />
         <main className="app-main">
           <Suspense fallback={<LoadingFallback />}>
             {renderPage()}
           </Suspense>
         </main>
-      </div>
-
-      {showShare && selectedPet && (
-        <ShareModal pet={selectedPet} onClose={() => setShowShare(false)} />
-      )}
-    </ErrorBoundary>
+      </div>    </ErrorBoundary>
   )
 }
 

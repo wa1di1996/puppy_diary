@@ -3,6 +3,7 @@ import { PawIcon } from '../components/icons'
 import { breedsData } from '../data/breeds'
 import { PhotoUpload } from '../components'
 import { ImageViewer } from '../components/ImageViewer'
+import { ShareModal } from '../components/ShareModal'
 import { updatePet } from '../api/client'
 
 export function ProfilePage({ profile, onSave, onBack, selectedPet, onUpdatePet }) {
@@ -10,6 +11,8 @@ export function ProfilePage({ profile, onSave, onBack, selectedPet, onUpdatePet 
   const [imagePreview, setImagePreview] = useState(profile?.photo || null)
   const [saving, setSaving] = useState(false)
   const [showViewer, setShowViewer] = useState(false)
+  const [showShare, setShowShare] = useState(false)
+  const isOwner = selectedPet?.owner_id === JSON.parse(localStorage.getItem('puppy_user') || '{}').id
 
   const handleImageChange = (dataUrl) => {
     setImagePreview(dataUrl)
@@ -83,10 +86,18 @@ export function ProfilePage({ profile, onSave, onBack, selectedPet, onUpdatePet 
           <button type="button" className="secondary-btn" onClick={onBack}>取消</button>
           <button type="submit" className="primary-btn" disabled={saving}>{saving ? '保存中...' : '保存'}</button>
         </div>
+        {isOwner && (
+          <button type="button" className="secondary-btn" onClick={() => setShowShare(true)} style={{ width: '100%', marginTop: 12 }}>
+            🔗 分享宠物
+          </button>
+        )}
       </form>
 
       {showViewer && imagePreview && (
         <ImageViewer src={imagePreview} alt={profile?.name || '狗狗'} onClose={() => setShowViewer(false)} />
+      )}
+      {showShare && selectedPet && (
+        <ShareModal pet={selectedPet} onClose={() => setShowShare(false)} />
       )}
     </div>
   )

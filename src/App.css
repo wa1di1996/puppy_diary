@@ -406,6 +406,7 @@ body {
 
 .avatar-placeholder { font-size: 40px; }
 
+.welcome-msg { font-size: 13px; color: var(--primary); font-weight: 600; margin-bottom: 12px; z-index: 1; position: relative; }
 .dog-profile h3 {
   font-size: 22px;
   font-weight: 900;
@@ -557,29 +558,7 @@ body {
   align-items: center;
   gap: 8px;
   border: 1.5px solid var(--border-light);
-  transition: all 0.25s var(--ease);
-  position: relative;
-  overflow: hidden;
 }
-
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--primary-light));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s var(--ease);
-}
-
-.stat-card:hover {
-  border-color: var(--primary-light);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(92,61,46,0.1);
-}
-
-.stat-card:hover::before { transform: scaleX(1); }
 
 .stat-icon {
   font-size: 22px;
@@ -591,8 +570,6 @@ body {
   border-radius: 12px;
   transition: background 0.2s;
 }
-
-.stat-card:hover .stat-icon { background: #fef3e8; }
 
 .stat-value {
   font-size: 20px;
@@ -1959,7 +1936,9 @@ body {
 .login-hero { text-align: center; padding: 48px 0 24px; }
 .login-icon { font-size: 64px; margin-bottom: 12px; }
 .login-hero h1 { font-size: 24px; font-weight: 900; margin-bottom: 4px; }
-.login-hero p { color: var(--text-secondary); font-size: 14px; }
+.login-hero .login-subtitle { color: var(--text-secondary); font-size: 14px; }
+.login-dog-icon { width: 80px; height: 80px; border-radius: 50%; }
+.login-footer { text-align: center; color: var(--text-muted); font-size: 12px; margin-top: 24px; }
 .login-form { background: var(--surface); border-radius: var(--radius-lg); padding: 22px 20px; border: 1.5px solid var(--border-light); }
 .login-error { background: #fef2f0; color: var(--danger); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; margin-bottom: 14px; text-align: center; }
 .login-btn { width: 100%; }

@@ -22,7 +22,7 @@ export function Header({ currentPage, onNavigate, onLogout, selectedPet, onSelec
         {isHome && selectedPet && (
           <div className="header-pet-area">
             <button className="header-greeting" onClick={() => setShowPetList(!showPetList)}>
-              {selectedPet.name} {selectedPet.role === 'owner' ? '主人' : selectedPet.role === 'guardian' ? '' : selectedPet.role} ▼
+              {selectedPet.name} ▼
             </button>
             {showPetList && (
               <div className="pet-switcher-dropdown">
@@ -50,9 +50,6 @@ export function Header({ currentPage, onNavigate, onLogout, selectedPet, onSelec
               <span>返回</span>
             </button>
           </nav>
-        )}
-        {isHome && selectedPet && selectedPet.owner_id === JSON.parse(localStorage.getItem('puppy_user') || '{}').id && (
-          <button className="text-btn share-btn" onClick={onOpenShare}>分享</button>
         )}
         {onLogout && (
           <button className="text-btn logout-btn" onClick={onLogout}>退出登录</button>
