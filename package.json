@@ -1,0 +1,58 @@
+{
+  "name": "puppy_diary",
+  "private": true,
+  "version": "1.0.0",
+  "description": "汪星日记 — 毛孩子的专属记录 App",
+  "author": "Mochi",
+  "main": "electron/main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "node tests/quick-test.cjs",
+    "test:e2e": "node tests/e2e.test.cjs",
+    "electron:dev": "NODE_ENV=development electron electron/main.js",
+    "electron:build": "npm run build && electron-builder --mac --dir",
+    "electron:build:sign": "npm run build && electron-builder --mac --dir && node scripts/fix-signature.js && open release/mac-arm64/汪星日记.app",
+    "electron:dist": "npm run build && electron-builder --mac"
+  },
+  "dependencies": {
+    "lucide-react": "^1.14.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "recharts": "^3.8.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "electron": "^41.5.0",
+    "electron-builder": "^26.8.1",
+    "eslint": "^10.2.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.5.0",
+    "playwright": "^1.59.1",
+    "vite": "^8.0.10"
+  },
+  "build": {
+    "appId": "com.mochi.puppydiary",
+    "productName": "汪星日记",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.lifestyle",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "entitlements.mac.plist"
+    }
+  }
+}

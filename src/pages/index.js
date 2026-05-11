@@ -1,0 +1,7 @@
+export { HomePage } from './HomePage'
+export { ProfilePage } from './ProfilePage'
+export { BreedInfoPage } from './BreedInfoPage'
+export { DailyRecordPage } from './DailyRecordPage'
+export { RecordsListPage } from './RecordsListPage'
+export { DogFoodPage } from './DogFoodPage'
+export { HealthManagePage } from './HealthManagePage'

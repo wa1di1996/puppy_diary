@@ -1,0 +1,17 @@
+{
+  "name": "汪星日记",
+  "short_name": "汪星日记",
+  "description": "毛孩子的专属记录 App",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#faf7f2",
+  "theme_color": "#d4813a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
