@@ -10,10 +10,13 @@ export function DogFoodPage({ foods, onAdd, onUpdate, onDelete, onBack }) {
   const [formData, setFormData] = useState({
     brand: '', name: '', totalPrice: '', totalAmount: '', startDate: '', notes: ''
   })
+  const [formError, setFormError] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!formData.brand || !formData.name) return
+    if (!formData.brand.trim()) { setFormError('品牌不能为空'); return }
+    if (!formData.name.trim()) { setFormError('产品名称不能为空'); return }
+    setFormError('')
     setSaving(true)
     try {
       if (editingId) { await onUpdate(editingId, formData) }
@@ -36,6 +39,7 @@ export function DogFoodPage({ foods, onAdd, onUpdate, onDelete, onBack }) {
     setFormData({ brand: '', name: '', totalPrice: '', totalAmount: '', startDate: '', notes: '' })
     setEditingId(null)
     setShowForm(false)
+    setFormError('')
   }
 
   const handleEdit = (food) => {
@@ -92,8 +96,9 @@ export function DogFoodPage({ foods, onAdd, onUpdate, onDelete, onBack }) {
         </>
       ) : (
         <form onSubmit={handleSubmit} className="food-form">
-          <div className="form-group"><label>品牌</label><input type="text" value={formData.brand} onChange={e => setFormData({ ...formData, brand: e.target.value })} placeholder="例如: 渴望" required /></div>
-          <div className="form-group"><label>产品名称</label><input type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="例如: 六种鱼成犬粮" required /></div>
+          {formError && <div className="feedback-banner error">{formError}</div>}
+          <div className="form-group"><label>品牌</label><input type="text" value={formData.brand} onChange={e => { setFormData({ ...formData, brand: e.target.value }); setFormError('') }} placeholder="例如: 渴望" required /></div>
+          <div className="form-group"><label>产品名称</label><input type="text" value={formData.name} onChange={e => { setFormData({ ...formData, name: e.target.value }); setFormError('') }} placeholder="例如: 六种鱼成犬粮" required /></div>
           <div className="form-row">
             <div className="form-group"><label>购买价格 (元)</label><input type="number" step="0.01" value={formData.totalPrice} onChange={e => setFormData({ ...formData, totalPrice: e.target.value })} placeholder="例如: 450" /></div>
             <div className="form-group"><label>总量 (g)</label><input type="number" value={formData.totalAmount} onChange={e => setFormData({ ...formData, totalAmount: e.target.value })} placeholder="例如: 10000" /></div>

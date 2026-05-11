@@ -22,6 +22,7 @@ export async function apiLogin(username, password) { return request('/auth/login
 // Pets
 export async function fetchPets() { const d = await request('/pets'); return d.pets }
 export async function createPet(data) { return request('/pets', { method: 'POST', body: JSON.stringify(data) }) }
+export async function updatePet(id, data) { return request(`/pets/${id}`, { method: 'PUT', body: JSON.stringify(data) }) }
 export async function removePet(id) { return request(`/pets/${id}`, { method: 'DELETE' }) }
 
 // Profile

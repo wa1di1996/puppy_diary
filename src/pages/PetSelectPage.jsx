@@ -37,7 +37,7 @@ export default function PetSelectPage({ onSelectPet }) {
     try {
       const data = await apiCreatePet({ name: form.name, breedId: form.breedId, role: form.role, birthday: form.birthday || null, photo: form.photo || null, gender: form.gender || null })
       onSelectPet(data.pet)
-      await saveProfile({ name: form.name, breedId: form.breedId, birthday: form.birthday, photo: form.photo })
+      await saveProfile({ name: form.name, breedId: form.breedId, birthday: form.birthday, photo: form.photo, gender: form.gender, role: form.role })
     } finally { setSubmitting(false) }
   }
 

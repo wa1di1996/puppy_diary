@@ -3,8 +3,9 @@ import { PawIcon } from '../components/icons'
 import { breedsData } from '../data/breeds'
 import { PhotoUpload } from '../components'
 import { ImageViewer } from '../components/ImageViewer'
+import { updatePet } from '../api/client'
 
-export function ProfilePage({ profile, onSave, onBack, selectedPet }) {
+export function ProfilePage({ profile, onSave, onBack, selectedPet, onUpdatePet }) {
   const [formData, setFormData] = useState({ name: profile?.name || '', photo: profile?.photo || '' })
   const [imagePreview, setImagePreview] = useState(profile?.photo || null)
   const [saving, setSaving] = useState(false)
@@ -20,6 +21,17 @@ export function ProfilePage({ profile, onSave, onBack, selectedPet }) {
     if (!formData.name.trim()) return
     setSaving(true)
     await onSave({ ...profile, name: formData.name, photo: formData.photo })
+    // Also update pet name in pets table if name changed
+    if (selectedPet && formData.name !== selectedPet.name) {
+      try {
+        const updated = await updatePet(selectedPet.id, { name: formData.name, photo: formData.photo })
+        if (updated.pet && onUpdatePet) {
+          onUpdatePet(updated.pet)
+        }
+      } catch (err) {
+        // Pet name update failed silently, profile save already succeeded
+      }
+    }
     setSaving(false)
     onBack()
   }
@@ -58,6 +70,12 @@ export function ProfilePage({ profile, onSave, onBack, selectedPet }) {
           <div className="form-group readonly-group">
             <label>性别</label>
             <div className="readonly-value">{selectedPet.gender === 'boy' ? '男孩 ♂' : '女孩 ♀'}</div>
+          </div>
+        )}
+        {selectedPet?.role && (
+          <div className="form-group readonly-group">
+            <label>身份</label>
+            <div className="readonly-value">{selectedPet.role === 'owner' ? '主人' : selectedPet.role === 'guardian' ? '共享成员' : selectedPet.role}</div>
           </div>
         )}
 

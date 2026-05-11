@@ -29,6 +29,16 @@ export function createPetsRouter(db) {
     res.json({ pet })
   })
 
+  router.put('/:id', (req, res) => {
+    const { name, photo } = req.body
+    const pet = db.prepare('SELECT owner_id FROM pets WHERE id = ?').get(req.params.id)
+    if (!pet) return res.status(404).json({ error: '宠物不存在' })
+    if (pet.owner_id !== req.user.id) return res.status(403).json({ error: '只有宠物主人才能修改' })
+    db.prepare('UPDATE pets SET name = COALESCE(?, name), photo = COALESCE(?, photo) WHERE id = ?').run(name || null, photo || null, req.params.id)
+    const updated = db.prepare('SELECT p.*, up.role FROM pets p JOIN user_pets up ON up.pet_id = p.id WHERE p.id = ?').get(req.params.id)
+    res.json({ pet: updated })
+  })
+
   // Only owner can delete pet
   router.delete('/:id', (req, res) => {
     const pet = db.prepare('SELECT owner_id FROM pets WHERE id = ?').get(req.params.id)

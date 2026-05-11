@@ -54,7 +54,9 @@ function App() {
   const handleSelectPet = useCallback((pet) => {
     setSelectedPet(pet)
     localStorage.setItem('puppy_selected_pet', JSON.stringify(pet))
-  }, [])
+    // Also update profile with pet data so birthday/gender/role show correctly
+    replaceProfile({ name: pet.name, breedId: pet.breed_id, birthday: pet.birthday, photo: pet.photo, gender: pet.gender, role: pet.role })
+  }, [replaceProfile])
 
   const handleLogout = useCallback(() => {
     setSelectedPet(null)
@@ -79,7 +81,7 @@ function App() {
     const back = () => handleNavigate(PAGES.HOME)
     switch (currentPage) {
       case PAGES.HOME: return <HomePage profile={profile} onNavigate={handleNavigate} stats={stats} records={records} selectedPet={selectedPet} />
-      case PAGES.PROFILE: return <ProfilePage profile={profile} onSave={saveProfile} onBack={back} selectedPet={selectedPet} />
+      case PAGES.PROFILE: return <ProfilePage profile={profile} onSave={saveProfile} onBack={back} selectedPet={selectedPet} onUpdatePet={handleSelectPet} />
       case PAGES.BREED_INFO: return <BreedInfoPage profile={profile} onBack={back} />
       case PAGES.DAILY_RECORD: return <DailyRecordPage onSave={addRecord} onBack={back} />
       case PAGES.HEALTH_MANAGE: return <HealthManagePage profile={profile} onSave={addRecord} onBack={back} />

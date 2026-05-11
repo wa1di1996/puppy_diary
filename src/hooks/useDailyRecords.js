@@ -24,7 +24,7 @@ export function useDailyRecords(petId) {
 
   const deleteRecord = useCallback(async (id) => {
     try { await apiRemove(id); setRecords(prev => prev.filter(r => r.id !== id)); setError(null) }
-    catch (e) { setError(e.message) }
+    catch (e) { setError(e.message); throw e }
   }, [])
 
   const replaceAll = useCallback((newRecords) => { setRecords(newRecords) }, [])

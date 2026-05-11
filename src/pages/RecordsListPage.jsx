@@ -28,6 +28,7 @@ const filterOptions = [
 
 export function RecordsListPage({ records, onDelete, onBack }) {
   const [filterType, setFilterType] = useState(null)
+  const [deleteError, setDeleteError] = useState('')
 
   const filtered = filterType
     ? records.filter(r => r.type === filterType)
@@ -38,6 +39,8 @@ export function RecordsListPage({ records, onDelete, onBack }) {
   return (
     <div className="page records-list-page">
       <h2><ListIcon size={16} color="var(--text-secondary)" /> 记录列表</h2>
+
+      {deleteError && <div className="feedback-banner error">{deleteError}</div>}
 
       <div className="filter-tabs">
         {filterOptions.map(({ type, label, Icon }) => (
@@ -105,9 +108,14 @@ export function RecordsListPage({ records, onDelete, onBack }) {
                 </div>
                 <button
                   className="delete-btn"
-                  onClick={() => {
+                  onClick={async () => {
+                    setDeleteError('')
                     if (window.confirm('确定删除这条记录？')) {
-                      onDelete(record.id)
+                      try {
+                        await onDelete(record.id)
+                      } catch (e) {
+                        setDeleteError('删除失败：' + e.message)
+                      }
                     }
                   }}
                   title="删除"
